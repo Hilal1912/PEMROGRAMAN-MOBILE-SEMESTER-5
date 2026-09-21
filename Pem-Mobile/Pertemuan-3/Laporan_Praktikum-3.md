@@ -48,4 +48,8 @@ Mengatur seluruh gaya tampilan visual aplikasi (warna latar terang, tata letak F
 
 ### Langkah 12: Pengujian dan Verifikasi Tampilan Aplikasi
 Menjalankan aplikasi menggunakan perintah `npx expo start`, membuka tampilan pada web browser (Google Chrome), dan memastikan seluruh komponen serta tombol interaktif berjalan dengan baik tanpa kendala.
-![Langkah 12: Pengujian dan Verifikasi Tampilan Aplikasi](image-11.png)
+
+<video width="100%" controls>
+  <source src="./Screen%20Recording%202026-09-21%20195143.mp4" type="video/mp4">
+  Browser Anda tidak mendukung pemutaran video.
+</video>
