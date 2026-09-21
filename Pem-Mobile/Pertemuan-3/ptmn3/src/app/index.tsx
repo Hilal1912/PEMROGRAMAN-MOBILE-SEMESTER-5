@@ -18,10 +18,11 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  Linking
 } from 'react-native';
 
 // ============================================
-// 1. DATA PROFIL PRIBADI & KONTAK
+// 1. DATA PROFIL PRIBADI
 // ============================================
 const PROFILE_DATA = {
   name: "Ibrahim Hilal",
@@ -31,11 +32,10 @@ const PROFILE_DATA = {
   email: "ibrahimhilal477@gmail.com",
   phone: "+6281234567890",
   location: "Cirebon, Jawa Barat",
-  github: "https://github.com/ibrahimhilal"
 };
 
 // ============================================
-// 2. DATA SKILLS (+3 Skill Baru)
+// 2. DATA SKILLS
 // ============================================
 const SKILLS_DATA = [
   { id: '1', name: 'React Native', level: 80, color: '#0284c7', desc: 'Pengembangan aplikasi mobile lintas platform.' },
@@ -65,7 +65,16 @@ const HISTORY_DATA = [
 ];
 
 // ============================================
-// 4. SUB-COMPONENTS (SkillCard & TimelineCard)
+// 4. DATA SOCIAL MEDIA (Persis Modul Dosen)
+// ============================================
+const SOCIAL = [
+  { id: 's1', label: 'Github', icon: '🏅', url: 'https://github.com/Hilal1912' },
+  { id: 's2', label: 'LinkedIn', icon: '💼', url: 'https://www.linkedin.com' },
+  { id: 's3', label: 'Email', icon: '✉️', url: 'mailto:ibrahimhilal477@gmail.com' },
+];
+
+// ============================================
+// 5. SUB-COMPONENTS (SkillCard & TimelineCard)
 // ============================================
 const SkillCard = ({ item, onPress }: { item: typeof SKILLS_DATA[0]; onPress: (item: any) => void }) => (
   <TouchableOpacity style={styles.skillCard} onPress={() => onPress(item)} activeOpacity={0.7}>
@@ -88,7 +97,7 @@ const TimelineCard = ({ item, onPress }: { item: any; onPress: (item: any) => vo
 );
 
 // ============================================
-// 5. KOMPONEN UTAMA
+// 6. KOMPONEN UTAMA
 // ============================================
 export default function App() {
   // State Management
@@ -100,16 +109,41 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('All');
 
+  // Handler Konfirmasi Bukti Social Media (Kompatibel Web Chrome & Mobile)
+  const handleSocialPress = (label: string, url: string) => {
+    if (Platform.OS === 'web') {
+      window.alert(`[Bukti Social ${label}]\n\nURL Tautan: ${url}`);
+    } else {
+      Alert.alert(
+        `Bukti Social ${label}`,
+        `URL Tautan: ${url}`,
+        [
+          { text: 'Tutup', style: 'cancel' },
+          { text: 'Buka Tautan', onPress: () => Linking.openURL(url) }
+        ]
+      );
+    }
+  };
+
+  // Handler Alert Umum (Kompatibel Web & Mobile)
+  const showAlert = (title: string, message: string) => {
+    if (Platform.OS === 'web') {
+      window.alert(`[${title}]\n\n${message}`);
+    } else {
+      Alert.alert(title, message);
+    }
+  };
+
   // Handler Form Kontak
   const handleSendMessage = () => {
     if (!contactName.trim() || !contactMessage.trim()) {
-      Alert.alert('Peringatan', 'Silakan isi Nama dan Pesan terlebih dahulu!');
+      showAlert('Peringatan', 'Silakan isi Nama dan Pesan terlebih dahulu!');
       return;
     }
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      Alert.alert('Sukses', `Terima kasih ${contactName}, pesan Anda telah terkirim!`);
+      showAlert('Sukses', `Terima kasih ${contactName}, pesan Anda telah terkirim!`);
       setContactName('');
       setContactMessage('');
     }, 2000);
@@ -121,11 +155,10 @@ export default function App() {
 
       {/* HEADER BAR */}
       <View style={styles.headerBar}>
-        <TouchableOpacity onPress={() => Alert.alert('CV Digital', 'Aplikasi CV Digital milik Ibrahim Hilal')}>
+        <TouchableOpacity onPress={() => showAlert('CV Digital', 'Aplikasi CV Digital milik Ibrahim Hilal')}>
           <Text style={styles.headerTitle}>CV Digital 📱</Text>
         </TouchableOpacity>
 
-        {/* SELURUH WADAH AVAILABLE SEKARANG BISA DIKLIK */}
         <TouchableOpacity 
           style={styles.switchContainer} 
           onPress={() => setIsOpenToWork(!isOpenToWork)}
@@ -162,22 +195,22 @@ export default function App() {
           {/* SECTION PROFIL */}
           {(activeTab === 'All' || activeTab === 'Info') && (
             <View style={styles.profileSection}>
-              <TouchableOpacity onPress={() => Alert.alert('Foto Profil', 'Ibrahim Hilal - Mahasiswa Informatika UIN Siber Syekh Nurjati Cirebon')}>
+              <TouchableOpacity onPress={() => showAlert('Foto Profil', 'Ibrahim Hilal - Mahasiswa Informatika UIN Siber Syekh Nurjati Cirebon')}>
                 <Image source={PROFILE_DATA.avatar} style={styles.avatar} />
               </TouchableOpacity>
               
-              <TouchableOpacity onPress={() => Alert.alert('Nama Lengkap', PROFILE_DATA.name)}>
+              <TouchableOpacity onPress={() => showAlert('Nama Lengkap', PROFILE_DATA.name)}>
                 <Text style={styles.name}>{PROFILE_DATA.name}</Text>
               </TouchableOpacity>
               
-              <TouchableOpacity onPress={() => Alert.alert('Profesi', PROFILE_DATA.role)}>
+              <TouchableOpacity onPress={() => showAlert('Profesi', PROFILE_DATA.role)}>
                 <Text style={styles.role}>{PROFILE_DATA.role}</Text>
               </TouchableOpacity>
               
               {isOpenToWork && (
                 <TouchableOpacity 
                   style={styles.badge} 
-                  onPress={() => Alert.alert('Status Kerja', 'Saat ini terbuka untuk posisi Web / Mobile Developer Intern.')}
+                  onPress={() => showAlert('Status Kerja', 'Saat ini terbuka untuk posisi Web / Mobile Developer Intern.')}
                 >
                   <Text style={styles.badgeText}>#OpenToWork</Text>
                 </TouchableOpacity>
@@ -185,14 +218,17 @@ export default function App() {
 
               <Text style={styles.bio}>{PROFILE_DATA.bio}</Text>
 
-              {/* SOSIAL MEDIA */}
+              {/* SOSIAL MEDIA (MENAMPILKAN BUKTI SOCIAL URL) */}
               <View style={styles.socialContainer}>
-                <TouchableOpacity style={styles.socialBtn} onPress={() => Alert.alert('GitHub', PROFILE_DATA.github)}>
-                  <Text style={styles.socialText}>GitHub</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialBtn} onPress={() => Alert.alert('Email', PROFILE_DATA.email)}>
-                  <Text style={styles.socialText}>Email</Text>
-                </TouchableOpacity>
+                {SOCIAL.map((item) => (
+                  <TouchableOpacity 
+                    key={item.id} 
+                    style={styles.socialBtn} 
+                    onPress={() => handleSocialPress(item.label, item.url)}
+                  >
+                    <Text style={styles.socialText}>{item.icon} {item.label}</Text>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
           )}
@@ -242,7 +278,7 @@ export default function App() {
             </View>
           )}
 
-          {/* SECTION FORM KONTAK & INFORMASI LANGSUNG */}
+          {/* SECTION FORM KONTAK */}
           {(activeTab === 'All' || activeTab === 'Kontak') && (
             <View style={styles.sectionBox}>
               <Text style={styles.sectionTitle}>Hubungi Saya</Text>
@@ -251,19 +287,19 @@ export default function App() {
               <View style={{ marginBottom: 15 }}>
                 <TouchableOpacity 
                   style={[styles.socialBtn, { backgroundColor: '#25D366', marginBottom: 8, alignItems: 'center' }]} 
-                  onPress={() => Alert.alert('WhatsApp', `Hubungi ke: ${PROFILE_DATA.phone}`)}
+                  onPress={() => handleSocialPress('WhatsApp', `https://wa.me/6281234567890`)}
                 >
                   <Text style={[styles.socialText, { color: '#fff' }]}>💬 Hubungi via WhatsApp</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
                   style={[styles.socialBtn, { backgroundColor: '#ea4335', marginBottom: 8, alignItems: 'center' }]} 
-                  onPress={() => Alert.alert('Email', `Kirim email ke: ${PROFILE_DATA.email}`)}
+                  onPress={() => handleSocialPress('Email', `mailto:${PROFILE_DATA.email}`)}
                 >
                   <Text style={[styles.socialText, { color: '#fff' }]}>✉️ Kirim Email ({PROFILE_DATA.email})</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => Alert.alert('Lokasi', PROFILE_DATA.location)}>
+                <TouchableOpacity onPress={() => showAlert('Lokasi', PROFILE_DATA.location)}>
                   <Text style={{ color: '#64748b', fontSize: 12, marginTop: 4, textAlign: 'center' }}>
                     📍 Lokasi: {PROFILE_DATA.location}
                   </Text>
@@ -301,7 +337,7 @@ export default function App() {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      {/* MODAL DETAIL (UNTUK SKILL & RIWAYAT) */}
+      {/* MODAL DETAIL */}
       <Modal
         visible={modalVisible}
         animationType="slide"
@@ -324,7 +360,7 @@ export default function App() {
 }
 
 // ============================================
-// 6. STYLESHEET (LIGHT THEME)
+// 7. STYLESHEET (LIGHT THEME)
 // ============================================
 const styles = StyleSheet.create({
   container: {
