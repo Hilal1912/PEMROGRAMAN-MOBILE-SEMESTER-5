@@ -214,14 +214,14 @@ Berikut adalah hasil pengujian dan dokumentasi dari masing-masing jenis navigasi
 ### 1. Stack Navigation (Praktikum 1)
 Pada praktikum pertama, diimplementasikan Stack Navigation yang mengatur alur halaman secara linier. Pengguna dapat berpindah dari Halaman Login ke Halaman Sign Up dan kembali ke Halaman Login.
 
-![Hasil Stack Navigation](image-1.png)
+![Hasil Stack Navigation](ptmn4/image-1.png)
 
 ### 2. Bottom Tab Navigation (Praktikum 2)
 Pada praktikum kedua, diimplementasikan Bottom Tab Navigation yang menampilkan pintasan menu menetap di bagian bawah layar untuk mempermudah navigasi antara Halaman Beranda dan Halaman Profil.
 
-![Hasil Bottom Tab Navigation](image-2.png)
+![Hasil Bottom Tab Navigation](ptmn4/image-2.png)
 
 ### 3. Drawer Navigation (Praktikum 3)
 Pada praktikum ketiga, diimplementasikan Drawer Navigation yang menyediakan menu panel samping (*sidebar*). Panel ini dapat dibuka untuk mengakses Halaman Beranda dan Halaman Profil Pengguna.
 
-![Hasil Drawer Navigation](image-3.png)
+![Hasil Drawer Navigation](ptmn4/image-3.png)
