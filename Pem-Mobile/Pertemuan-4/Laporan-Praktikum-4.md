@@ -258,9 +258,11 @@ Pada praktikum pertama, diimplementasikan Stack Navigation yang mengatur alur ha
 Pada praktikum kedua, diimplementasikan Bottom Tab Navigation yang menampilkan pintasan menu menetap di bagian bawah layar untuk mempermudah navigasi antara Halaman Beranda dan Halaman Profil.
 
 ![Hasil Bottom Tab Navigation](image-2.png)
+![alt text](image-5.png)
 
 ### 3. Drawer Navigation (Praktikum 3)
 
 Pada praktikum ketiga, diimplementasikan Drawer Navigation yang menyediakan menu panel samping (*sidebar*). Panel ini dapat dibuka untuk mengakses Halaman Beranda dan Halaman Profil Pengguna.
 
 ![Hasil Drawer Navigation](image-3.png)
+![alt text](image-4.png)
